@@ -1,0 +1,35 @@
+body{
+  background-color: #000000;
+}
+
+.calendary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ 
+}
+
+.main_section{
+  height: 70vh;
+  width: 50vw;
+  border: 1px solid gold;
+  margin-top: 45px;
+  display: flex;
+  justify-content: center;
+
+}
+
+.calendars{
+  border: 1px solid palegreen;
+  height: 35vh;
+  width: 49vw;
+  
+}
+
+.date_grid{
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+
+
