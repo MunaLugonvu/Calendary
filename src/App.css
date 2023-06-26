@@ -20,15 +20,87 @@ body{
 }
 
 .calendars{
-  border: 1px solid palegreen;
-  height: 35vh;
-  width: 49vw;
+  border: 1px solid lightgrey;
+  height: 48vh;
+  width: 50vw;
+  flex-wrap: wrap;
+  display: flex;
+
   
+}
+
+.right_arrow {
+  margin-right: 10px;
+  color: #efedf2;
+  cursor: pointer;
+}
+
+.left_arrow {
+  color: #efedf2;
+  cursor: pointer;
+}
+.headers{
+  background-color: darkolivegreen;
+}
+.month-header {
+  display: flex;
+  align-items: center;
+}
+
+.current_month {
+  background-color: #ffffff;
+  width: 25vw;
+  height: 48vh;
+  flex: 1;
+  border-right: 0.5px solid lightgray;
+}
+
+.next_month{
+  background-color: #ffffff;
+  width: 25vw;
+  height: 48vh;
+  flex: 1;
+
+}
+
+.month_header{
+  
+    flex: 1;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding-top: 4px;
+    padding-left: 5px;
+    color: white;
+    text-align: center;
+
+}
+
+.days_header {
+  display: flex;
+  justify-content: space-around;
+  color: white;
+  padding-bottom: 5px;
+  padding-right: 5px;
 }
 
 .date_grid{
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: repeat(7, 1fr);
+  
+}
+
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.cell {
+  background-color: white;
+  border: 1px solid lightgrey;
+  padding: 12px;
+  text-align: center;
 }
 
 

@@ -1,23 +1,117 @@
 import "./App.css";
+import { useState } from "react";
+import { IoChevronForwardOutline, IoChevronBackOutline } from "react-icons/io5";
+
+const MonthHeader = ({ month }) => {
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  return <div className="month_header">{months[month]} </div>;
+};
+
+const DaysHeader = () => {
+  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  return (
+    <div className="days_header">
+      {days.map((day) => (
+        <div key={day} className="day">
+          {day}
+        </div>
+      ))}
+    </div>
+  );
+};
+const DateGrid = ({ month }) => {
+  const daysInMonth = new Date(
+    new Date().getFullYear(),
+    month + 1,
+    0
+  ).getDate();
+  const startDate = new Date(new Date().getFullYear(), month, 1).getDay();
+
+  return (
+    <div className="date_grid">
+      {Array.from({ length: startDate }, (_, index) => (
+        <div key={`empty-${index}`} className="cell empty"></div>
+      ))}
+      {Array.from({ length: daysInMonth }, (_, index) => {
+        const dayIndex = (index + startDate) % 7;
+        return (
+          <div key={`date-${index}`} className={`cell day-${dayIndex}`}>
+            {index + 1}
+          </div>
+        );
+      })}
+    </div>
+  );
+};
 
 function App() {
+  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+  const [nextMonth, setNextMonth] = useState((currentMonth + 1) % 12);
+
+  const goToNextMonths = () => {
+    setCurrentMonth((currentMonth + 2) % 12);
+    setNextMonth((nextMonth + 2) % 12);
+  };
+
+  const goToPreviousMonths = () => {
+    setCurrentMonth((currentMonth + 10) % 12);
+    setNextMonth((nextMonth + 10) % 12);
+  };
   return (
     <div className="calendary">
       <div className="main_section">
         <div className="calendars">
           <div className="current_month">
-            <div className="month_header"></div>
-            <div className="days_header"></div>
-            <div className="date_grid"></div>
+            <div className="headers">
+              <div className="month-header">
+                <div className="left_arrow">
+                  {" "}
+                  <IoChevronBackOutline
+                    size={"1.5em"}
+                    onClick={goToPreviousMonths}
+                  />
+                </div>
+                <MonthHeader month={currentMonth} />
+              </div>
+
+              <DaysHeader />
+            </div>
+
+            <DateGrid month={currentMonth} />
           </div>
-          <div className="previous_month">
-            <div className="month_header"></div>
-            <div className="days_header"></div>
-            <div className="date_grid"></div>
+          <div className="next_month">
+            <div className="headers">
+            <div className="month-header">
+                  {" "}
+                  <MonthHeader month={nextMonth} />
+                  <div className="right_arrow">
+                    {" "}
+                    <IoChevronForwardOutline size={"1.5em"} onClick={goToNextMonths} />
+                  </div>
+                </div>
+
+              <DaysHeader />
+            </div>
+            <DateGrid month={nextMonth} />
           </div>
         </div>
-        <div className="events_section"></div>
       </div>
+      <div className="events_section"></div>
     </div>
   );
 }
