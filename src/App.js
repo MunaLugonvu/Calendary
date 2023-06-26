@@ -34,13 +34,47 @@ const DaysHeader = () => {
     </div>
   );
 };
+// const DateGrid = ({ month }) => {
+//   const daysInMonth = new Date(
+//     new Date().getFullYear(),
+//     month + 1,
+//     0
+//   ).getDate();
+//   const startDate = new Date(new Date().getFullYear(), month, 1).getDay();
+
+//   return (
+//     <div className="date_grid">
+//       {Array.from({ length: startDate }, (_, index) => (
+//         <div key={`empty-${index}`} className="cell empty"></div>
+//       ))}
+//       {Array.from({ length: daysInMonth }, (_, index) => {
+//         const dayIndex = (index + startDate) % 7;
+//         return (
+//           <div key={`date-${index}`} className={`cell day-${dayIndex}`}>
+//             {index + 1}
+//           </div>
+//         );
+//       })}
+//     </div>
+//   );
+// };
+
 const DateGrid = ({ month }) => {
-  const daysInMonth = new Date(
-    new Date().getFullYear(),
-    month + 1,
-    0
-  ).getDate();
+  const daysInMonth = new Date(new Date().getFullYear(), month + 1, 0).getDate();
   const startDate = new Date(new Date().getFullYear(), month, 1).getDay();
+  
+
+  // Example event data for demonstration
+  const eventData = {
+    "2023-06-07": ["event1", "event2"],
+    "2023-06-15": ["event3"],
+    "2023-07-20": ["event4", "event5", "event6"],
+  };
+
+  const getEventCount = (date) => {
+    const dateString = new Date(new Date().getFullYear(), month, date).toISOString().split('T')[0];
+    return eventData[dateString] ? eventData[dateString].length : 0;
+  };
 
   return (
     <div className="date_grid">
@@ -49,9 +83,19 @@ const DateGrid = ({ month }) => {
       ))}
       {Array.from({ length: daysInMonth }, (_, index) => {
         const dayIndex = (index + startDate) % 7;
+        const date = index + 1;
+        const eventCount = getEventCount(date);
+
         return (
           <div key={`date-${index}`} className={`cell day-${dayIndex}`}>
-            {index + 1}
+            {date}
+            {eventCount > 0 && (
+              <div className="event_dots">
+                {Array.from({ length: eventCount }, (_, index) => (
+                  <div key={`dot-${index}`} className="event_dot"></div>
+                ))}
+              </div>
+            )}
           </div>
         );
       })}
